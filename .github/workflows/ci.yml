@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-win32-static:
+    name: "Windows: Dynamic Build"
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install PIP Modules
+      run: python -m pip install -r requirements.txt
+
+    - name: Build Project (Static build)
+      run: pyinstaller --onefile --noconsole --name="Face Toon" main.py
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: FaceToon-win32
+        path: D:\a\FaceToon\FaceToon\dist
